@@ -1,22 +1,22 @@
 echo installing express
-call npm i express
+call npm i express --save
 pause
-echo installing body-parser
+echo installing body-parser --save
 call npm i body-parser
 pause
-echo installing memory-cache
+echo installing memory-cache --save
 call npm i memory-cache
 pause
-echo installing tedious
+echo installing tedious --save
 call npm i tedious
 pause
-echo installing ejs
+echo installing ejs --save
 call npm i ejs
 pause
-echo installing passport
+echo installing passport --save
 call npm i passport
 pause
-echo installing bower
+echo installing bower --save
 call npm i -g bower
 pause
 echo installing bootstrap
