@@ -35,7 +35,7 @@
 //     this.correctAnswer = oCorrectAnswer;
 // }
 
-"use strict"
+// "use strict"
 
 var express = require('express');
 
@@ -44,8 +44,8 @@ server.listen(1234, function() {
     console.log("ready on 1234");
 });
 
-server.set('views', path.join(__dirname, 'views'));
-server.use(require('/survey'));
-// server.set('images', path.join(__dirname, 'images'));
+server.set('views', __dirname + '/views');
+server.use(require('./survey'));
+server.set('images', __dirname + '/images');
 
-
+console.log('settings in place')
