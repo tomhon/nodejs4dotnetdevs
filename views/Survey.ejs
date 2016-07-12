@@ -1,0 +1,9 @@
+<ul>
+    <% for(var i=0; i<players.length; i++) { %>
+        <li>
+            <a href= 'details/<%= players[i].id%>'>
+            <%= players[i].name%>
+            </a>
+        </li>
+       <% } %>
+</ul>

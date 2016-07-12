@@ -47,5 +47,6 @@ server.listen(1234, function() {
 server.set('views', __dirname + '/views');
 server.use(require('./survey'));
 server.set('images', __dirname + '/images');
+server.set('view engine', 'ejs');
 
 console.log('settings in place')
