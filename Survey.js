@@ -54,10 +54,12 @@ oPlayer.lastName = "Woods";
 oPlayer.sport = "Golf";
 oPlayer.id = 5;
 arrPlayers.push(oPlayer);
+console.log('arrPlayers setup');
+console.log('arrPlayer length is ' + arrPlayers.length);
 
 router.get('/survey', function (req, res) {
     res.render('survey', {
-        players: thePlayers
+        players: arrPlayers
     }
     );
 });

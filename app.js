@@ -35,7 +35,7 @@
 //     this.correctAnswer = oCorrectAnswer;
 // }
 
-// "use strict"
+"use strict"
 
 var express = require('express');
 
