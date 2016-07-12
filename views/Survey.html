@@ -1,0 +1,23 @@
+
+
+
+<link href="../bower_components\bootstrap\dist\css\bootstrap.css" rel="stylesheet" type="text/css" />
+
+<table class="table">
+<tr>
+    <td valign="top" alogn="center">
+        <ul>
+            <% for(var i=0; i<players.length; i++) { %>
+                <li>
+                    <a href= 'details/<%= players[i].id%>'>
+                    <%= players[i].displayName()%>
+                    </a>
+                </li>
+            <% } %>
+        </ul>
+    </td>
+</tr>
+
+</table>
+
+<img src="../images/27032 200x200.jpg" alt="tom" class="img-rounded" />

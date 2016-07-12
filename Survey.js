@@ -9,6 +9,9 @@ var thePlayers = [
     {id: 4, name: 'Bobby Orr', sport: 'Hockey'}    
 ];
 
+var image="27032.jpg"
+console.log(image);
+
 function Person() {
     this.id = 0;
     this.lastName = "";
@@ -59,9 +62,13 @@ console.log('arrPlayer length is ' + arrPlayers.length);
 
 router.get('/survey', function (req, res) {
     res.render('survey', {
-        players: arrPlayers
+        image, players: arrPlayers 
     }
     );
+});
+
+router.get('/images', function (req, res) {
+    res.send('image requested');
 });
 
 module.exports = router;
