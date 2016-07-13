@@ -65,6 +65,14 @@ router.get('/survey', function (req, res) {
 });
 
 router.post('/survey', function (req, res) {
+    var config = {
+        userName: '',
+        password: '',
+        server:'which.database.windows.net',
+        options: {
+            database: 'nodejstest'
+        }
+    }
     var sInput = req.body.txtInbound;
     console.log(sInput);
     res.send('posted');

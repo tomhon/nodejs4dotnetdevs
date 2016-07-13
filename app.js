@@ -38,11 +38,15 @@
 "use strict"
 
 var express = require('express');
+
 //use the body-parser js library to parse post requests for name/value pairs
 var bodyParser = require('body-parser');
 
 //use the memory-cache js library for caching 
 var cache = require('memory-cache');
+
+var Connection = require('tedious').Connection;
+var Request = require('tedious').Request;
 
 var server = express();
 server.use(bodyParser.urlencoded({ extended: true}));
