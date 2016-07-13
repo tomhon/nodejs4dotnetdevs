@@ -1,13 +1,13 @@
-
-
+<!doctype html>
+<html>
 <head>
 <title>EJS from Node.JS</title>
 <!--// <link href="../bower_components\bootstrap\dist\css\bootstrap.css" rel="stylesheet" type="text/css" />
 //  Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
-<h1><%= image %></h1>
 
+<body>
 <table class="table">
     <tr>
         <td valign="top" align="center">
@@ -22,10 +22,17 @@
             </ul>
         </td>
     </tr>
+    <tr>
+        <td>
+            <form action="/survey" method="post">
+                <input id="txtInbound" name="txtInbound" type="text" />
+                <input type="Submit" value="Press Me!" />
+            </form>
+        </td>
+    </tr>
 </table>
 
-<a href="http://www.microsoft.com">Visit Microsoft.com</a>
-
-<img src='/images/27032.jpg' alt="tom" />
-<br>
 <img src='http://ciyaaro.com/portal/wp-content/uploads/2012/04/Messi-Neymar.jpg' alt="tom" class="img-rounded"/>
+
+</body>
+</html>
