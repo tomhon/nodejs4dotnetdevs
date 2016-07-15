@@ -45,15 +45,12 @@ var bodyParser = require('body-parser');
 //use the memory-cache js library for caching 
 var cache = require('memory-cache');
 
-var Connection = require('tedious').Connection;
-var Request = require('tedious').Request;
+
 
 var server = express();
 server.use(bodyParser.urlencoded({ extended: true}));
 
-server.listen(1234, function() {
-    console.log("ready on 1234");
-});
+
 
 server.set('views', __dirname + '/views');
 //hooks up survey.js
@@ -64,7 +61,15 @@ server.set('images', __dirname + '/images');
 
 server.set('view engine', 'ejs');
 
-
-
-
 console.log('settings in place')
+console.log(process.env.NODE_ENV);
+
+
+
+
+
+
+
+server.listen(1234, function() {
+    console.log("ready on 1234");
+});

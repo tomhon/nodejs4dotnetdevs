@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var Connection = require('tedious').Connection;
+var Request = require('tedious').Request;
 
 var thePlayers = [
     {id: 0, name: 'Walter Payton', sport: 'Football'},
@@ -66,16 +68,26 @@ router.get('/survey', function (req, res) {
 
 router.post('/survey', function (req, res) {
     var config = {
-        userName: '',
-        password: '',
-        server:'which.database.windows.net',
+        userName: process.env.userName,
+        password: process.env.password,
+        server:process.env.SQLserver,
         options: {
-            database: 'nodejstest'
+           encrypt: true, database: process.env.database
         }
     }
     var sInput = req.body.txtInbound;
     console.log(sInput);
     res.send('posted');
+
+    var connection = new Connection(config);
+connection.on('connect', function (err) {
+    //if no error, then good to go...
+    console.log('Connected to SQL Azure ' + config.options.database);
+});
+connection.on('debug', function (text) {
+    console.log('debug called');
+    console.log(text);
+});
 });
 
 
