@@ -65,11 +65,6 @@ console.log('settings in place')
 console.log(process.env.NODE_ENV);
 
 
-
-
-
-
-
 server.listen(1234, function() {
     console.log("ready on 1234");
 });

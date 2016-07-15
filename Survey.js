@@ -83,6 +83,25 @@ router.post('/survey', function (req, res) {
 connection.on('connect', function (err) {
     //if no error, then good to go...
     console.log('Connected to SQL Azure ' + config.options.database);
+    var TYPES = require('tedious').TYPES;
+    var sql = 'insert into tblPlayers (id, firstName, lastName, sport)';
+    sql+= 'values (@id, @first, @last, @sport)';
+    var request = new Request(sql, function(err) {
+
+    });
+    var sFirst = req.body.txtFirst;
+    var sLast = req.body.txtLast;
+    var sSport = req.body.txtSport;
+    var sID = req.body.txtID;
+
+    request.addParameter('id', TYPES.Int, iID);
+    request.addParameter('first', TYPES.VarChar, sFirst);
+    request.addParameter('last', TYPES.VarChar, sLast);
+    request.addParameter('sport', TYPES.VarChar, sSport);
+    connection.execSql(request);
+
+    res.send(iID.toString() + ' entered ok');
+    
 });
 connection.on('debug', function (text) {
     console.log('debug called');
