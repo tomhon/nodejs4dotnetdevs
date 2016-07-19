@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <html>
 <head>
     <link href="../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
@@ -16,13 +17,49 @@
                 </li>
             <% } %>
         </ul>
+=======
+<!doctype html>
+<html>
+<head>
+<title>EJS from Node.JS</title>
+<!--// <link href="../bower_components\bootstrap\dist\css\bootstrap.css" rel="stylesheet" type="text/css" />
+//  Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+
+<body>
+<table class="table">
+    <tr>
+        <td valign="top" align="center">
+            <ul>
+                <% for(var i=0; i<players.length; i++) { %>
+                    <li>
+                        <a href= 'details/<%= players[i].id%>'>
+                        <%= players[i].displayName()%>
+                        </a>
+                    </li>
+                <% } %>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <form action="/survey" method="post">
+                <input id="txtInbound" name="txtInbound" type="text" />
+                <input type="Submit" value="Press Me!" />
+            </form>
+>>>>>>> 487417eb622200d228b071936685b0876bfca69d
         </td>
     </tr>
 </table>
 
+<<<<<<< HEAD
 
 <h1>Hello Again</h1>
 <img src="../images/img1.jpg" alt="img missing" />
+=======
+<img src='http://ciyaaro.com/portal/wp-content/uploads/2012/04/Messi-Neymar.jpg' alt="tom" class="img-rounded"/>
+>>>>>>> 487417eb622200d228b071936685b0876bfca69d
 
 </body>
 </html>
