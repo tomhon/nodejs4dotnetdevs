@@ -1,23 +1,23 @@
-<html>
-<head>
-    <link href="../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
-</head>
 
-<body>
-<table class = "table">
-    <tr>
-        <td valign="top" align="center">
+
+
+<link href="../bower_components\bootstrap\dist\css\bootstrap.css" rel="stylesheet" type="text/css" />
+
+<table class="table">
+<tr>
+    <td valign="top" alogn="center">
         <ul>
-           one
-           two
+            <% for(var i=0; i<players.length; i++) { %>
+                <li>
+                    <a href= 'details/<%= players[i].id%>'>
+                    <%= players[i].displayName()%>
+                    </a>
+                </li>
+            <% } %>
         </ul>
-        </td>
-    </tr>
+    </td>
+</tr>
+
 </table>
 
-
-<h1>Hello Again</h1>
-<img src="../images/img1.jpg" alt="img missing" />
-
-</body>
-</html>
+<img src="../images/27032 200x200.jpg" alt="tom" class="img-rounded" />
