@@ -57,10 +57,10 @@ server.set('views', __dirname + '/views');
 server.use(require('./survey'));
 //hooks up details.js 
 server.use(require('./details'));
+
+server.use(require('./playerAdmin'));
+
 server.set('images', __dirname + '/images');
-<<<<<<< HEAD
-server.set('view engine', 'ejs');
-=======
 
 server.set('view engine', 'ejs');
 
@@ -71,4 +71,4 @@ console.log(process.env.NODE_ENV);
 server.listen(1234, function() {
     console.log("ready on 1234");
 });
->>>>>>> 487417eb622200d228b071936685b0876bfca69d
+

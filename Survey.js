@@ -90,7 +90,7 @@ connection.on('connect', function (err) {
     var sFirst = req.body.txtFirst;
     var sLast = req.body.txtLast;
     var sSport = req.body.txtSport;
-    var sID = req.body.txtID;
+    var iID = req.body.txtID;
 
     request.addParameter('id', TYPES.Int, iID);
     request.addParameter('first', TYPES.VarChar, sFirst);
@@ -102,7 +102,7 @@ connection.on('connect', function (err) {
     
 });
 connection.on('debug', function (text) {
-    console.log('debug called');
+    console.log('>>>>debug called');
     console.log(text);
 });
 });
