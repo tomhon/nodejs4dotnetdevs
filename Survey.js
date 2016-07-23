@@ -4,14 +4,6 @@ var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 var cache = require('memory-cache');
 
-var thePlayers = [
-    {id: 0, name: 'Walter Payton', sport: 'Football'},
-    {id: 1, name: 'Babe Ruth', sport: 'Baseball'},
-    {id: 2, name: 'Wayne Gretzky', sport: 'Hockey'},
-    {id: 3, name: 'Tiger Woods', sport: 'Golf'},
-    {id: 4, name: 'Bobby Orr', sport: 'Hockey'}    
-];
-
 function Person() {
     this.id = 0;
     this.lastName = "";
@@ -45,6 +37,9 @@ function fetchPlayers() {
                 console.log(err);
             } else {
                 console.log('Retrieved ' + rowCount + ' rows');
+                // res.render('survey', {
+                //     players: cache.get("PlayerList")
+                // });
             }
             console.log('Closing Connection');
             connection.close();
@@ -96,8 +91,7 @@ router.get('/survey', function (req, res) {
     // }
     res.render('survey', {
         players: cache.get('PlayerList', arrPlayers) 
-    }
-    );
+    });
     
 });
 
