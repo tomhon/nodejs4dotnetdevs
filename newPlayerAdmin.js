@@ -3,39 +3,8 @@ var router = express.Router();
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 var TYPES = require('tedious').TYPES;
-//use the memory-cache js library for caching 
-var cache = require('memory-cache');
 
 var arrPlayers = [];
-
-function executeRequest(query) {
-     console.log('entering executeRequest', query);
-     var request = new Request(query, function(err) {
-
-                if (err) {
-                    console.log('>>>>error encountered');
-                    console.log(err);
-                } else {
-                    console.log('>>>>request successfully handled');
-                    console.log(err);
-                    // console.log('redirecting to Survey');
-                    // res.redirect('/survey');
-                }
-                
-
-                // console.log('closing connection');
-
-                // connection.close();
-            });
-            // request.addParameter('id', TYPES.Int, iID);
-            // request.addParameter('first', TYPES.VarChar, sFirst);
-            // request.addParameter('last', TYPES.VarChar, sLast);
-            // request.addParameter('sport', TYPES.VarChar, sSport);
-            console.log('request about to execute');
-            this.connection.execSql(request);
-
-    }
-
 
 router.post('/newPlayerAdmin', function (req, res) {
     var config = {
@@ -52,6 +21,29 @@ router.post('/newPlayerAdmin', function (req, res) {
 
     connection.on('connect', function (err) {
     //if no error, then good to go...
+        function executeRequest(query) {
+            console.log('entering executeRequest', query);
+            var request = new Request(query, function(err) {
+
+                if (err) {
+                    console.log('>>>>error encountered');
+                    console.log(err);
+                } else {
+                    console.log('>>>>request successfully handled');
+                    console.log(err);
+                    // console.log('redirecting to Survey');
+                    // res.redirect('/survey');
+                }
+                
+
+                // console.log('closing connection');
+
+                // connection.close();
+            });
+            console.log('request about to execute');
+            connection.execSql(request);
+
+    }
 
         if (err) {
             console.log('>>>>error encountered');
@@ -62,13 +54,15 @@ router.post('/newPlayerAdmin', function (req, res) {
             var sql = 'insert into tblPlayers (id, firstName, lastName, sport)';
             // sql+= ' values (@id, @first, @last, @sport)';
             sql+= ' values (' ;
-            sql+= req.body.txtID + ',';
-            sql+= req.body.txtFirst + ',';
-            sql+= req.body.txtLast + ',';
+            sql+= req.body.txtID + ",'";
+            sql+= req.body.txtFirst + "','";
+            sql+= req.body.txtLast + "','";
             sql+= req.body.txtSport;
-            sql+= ')';
-
-
+            sql+= "')";
+            // request.addParameter('id', TYPES.Int, iID);
+            // request.addParameter('first', TYPES.VarChar, sFirst);
+            // request.addParameter('last', TYPES.VarChar, sLast);
+            // request.addParameter('sport', TYPES.VarChar, sSport);
             console.log('Adding data to SQL');
             executeRequest(sql);
 
@@ -86,10 +80,6 @@ router.post('/newPlayerAdmin', function (req, res) {
         console.log(text);
     });
 
-        //         connection.on('secure', function (text) {
-        //     console.log('>>>>Tedious secure event called');
-        //     console.log(text);
-        // });
 });
 
 router.get('/newPlayerAdmin', function (req,res) {
