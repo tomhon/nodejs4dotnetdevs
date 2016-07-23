@@ -21,3 +21,6 @@ call npm i -g bower
 pause
 echo installing bootstrap
 call bower i bootstrap
+pause
+echo installing busboy
+call npm i busboy --save
