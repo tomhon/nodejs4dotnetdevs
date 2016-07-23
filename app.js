@@ -60,6 +60,8 @@ server.use(require('./details'));
 
 server.use(require('./playerAdmin'));
 
+server.use(require('./newPlayerAdmin'));
+
 server.set('images', __dirname + '/images');
 
 server.set('view engine', 'ejs');

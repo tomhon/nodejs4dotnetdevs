@@ -36,6 +36,8 @@ router.post('/playerAdmin', function (req, res) {
                     console.log('redirecting to Survey');
                     res.redirect('/survey');
                 }
+                console.log('closing connection');
+                connection.close();
             });
 
         
@@ -49,7 +51,7 @@ router.post('/playerAdmin', function (req, res) {
         request.addParameter('last', TYPES.VarChar, sLast);
         request.addParameter('sport', TYPES.VarChar, sSport);
         console.log('Adding data ' + iID + sFirst + sLast + sSport +' to SQL');
-        connection.execSql(request);
+        // connection.execSql(request);
    
         });
 
@@ -57,6 +59,16 @@ router.post('/playerAdmin', function (req, res) {
         console.log('>>>>debug called');
         console.log(text);
     });
+
+        connection.on('end', function (text) {
+        console.log('>>>>Tedious end event called');
+        console.log(text);
+    });
+
+        //         connection.on('secure', function (text) {
+        //     console.log('>>>>Tedious secure event called');
+        //     console.log(text);
+        // });
 });
 
 router.get('/playerAdmin', function (req,res) {
