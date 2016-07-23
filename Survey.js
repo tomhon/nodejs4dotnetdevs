@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
+var cache = require('memory-cache');
 
 var thePlayers = [
     {id: 0, name: 'Walter Payton', sport: 'Football'},
@@ -26,42 +27,78 @@ function Player () {
 }
 
 var arrPlayers = [];
-var oPlayer = new Player();
-oPlayer.firstName = "Walter";
-oPlayer.lastName = "Payton";
-oPlayer.sport = "Football";
-oPlayer.id = 1;
-arrPlayers.push(oPlayer);
-var oPlayer = new Player();
-oPlayer.firstName = "Bobby";
-oPlayer.lastName = "Orr";
-oPlayer.sport = "Hockey";
-oPlayer.id = 2;
-arrPlayers.push(oPlayer);
-var oPlayer = new Player();
-oPlayer.firstName = "Wayne";
-oPlayer.lastName = "Gretzky";
-oPlayer.sport = "Hockey";
-oPlayer.id = 3;
-arrPlayers.push(oPlayer);
-var oPlayer = new Player();
-oPlayer.firstName = "Babe";
-oPlayer.lastName = "Ruth";
-oPlayer.sport = "Baseball";
-oPlayer.id = 4;
-arrPlayers.push(oPlayer);
-var oPlayer = new Player();
-oPlayer.firstName = "Tiger";
-oPlayer.lastName = "Woods";
-oPlayer.sport = "Golf";
-oPlayer.id = 5;
-arrPlayers.push(oPlayer);
+
+function fetchPlayers() {
+    var config = {
+        userName: process.env.userName,
+        password: process.env.password,
+        server:process.env.SQLserver,
+        options: {
+           encrypt: true, database: process.env.database
+                }
+        };
+
+    var connection = new Connection(config);
+    connection.on('connect', function(err) {
+        request = new Request("select * from tblPlayers", function (err, rowCount) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('Retrieved ' + rowCount + ' rows');
+            }
+            console.log('Closing Connection');
+            connection.close();
+            });
+
+        request.on('row', function(columns) {
+            var oPlayer = new Player();
+            columns.forEach(function(column) {
+                if (column.value === null) {
+                    console.log('NULL');
+                } else {
+                    console.log(column.value);
+                    switch(column.metadata.colName) {
+                        case "firstName": 
+                            oPlayer.firstName = column.value;
+                            break;
+                        case "lastName":
+                            oPlayer.lastName = column.value;
+                            break;
+                        case "sport":
+                            oPlayer.sport = column.value;
+                            break;
+                        case "id":
+                            oPlayer.id = column.value;
+                            break;
+                    }
+                }
+                });
+                arrPlayers.push(oPlayer);
+                cache.put("PlayerList", arrPlayers);
+            });
+        cache.put("PlayerList", arrPlayers);
+
+
+        request.on('done', function(rowCount, more) {
+            console.log(rowCount + ' rows returned');
+        });
+        connection.execSql(request);
+    });
+    };
+
+
 
 router.get('/survey', function (req, res) {
+    console.log('calling fetchPlayers');
+    fetchPlayers(); 
+    // while (cache.get('PlayerList') === null) {
+    //     console.log('waiting for SQL server response');
+    // }
     res.render('survey', {
-        players: arrPlayers 
+        players: cache.get('PlayerList', arrPlayers) 
     }
     );
+    
 });
 
 router.post('/survey', function (req, res) {
