@@ -20,31 +20,103 @@ function Player () {
 
 var arrPlayers = [];
 
-function fetchPlayers() {
+// function fetchPlayers() {
+//     var config = {
+//         userName: process.env.userName,
+//         password: process.env.password,
+//         server:process.env.SQLserver,
+//         options: {
+//            encrypt: true, database: process.env.database
+//                 }
+//         };
+
+//     var connection = new Connection(config);
+//     connection.on('connect', function(err) {
+//         request = new Request("select * from tblPlayers", function (err, rowCount) {
+//             if (err) {
+//                 console.log(err);
+//             } else {
+//                 console.log('Retrieved ' + rowCount + ' rows');
+//                 // res.render('survey', {
+//                 //     players: cache.get("PlayerList")
+//                 // });
+//             }
+//             console.log('Closing Connection');
+//             connection.close();
+//             });
+
+//         request.on('row', function(columns) {
+//             var oPlayer = new Player();
+//             columns.forEach(function(column) {
+//                 if (column.value === null) {
+//                     console.log('NULL');
+//                 } else {
+//                     console.log(column.value);
+//                     switch(column.metadata.colName) {
+//                         case "firstName": 
+//                             oPlayer.firstName = column.value;
+//                             break;
+//                         case "lastName":
+//                             oPlayer.lastName = column.value;
+//                             break;
+//                         case "sport":
+//                             oPlayer.sport = column.value;
+//                             break;
+//                         case "id":
+//                             oPlayer.id = column.value;
+//                             break;
+//                     }
+//                 }
+//                 });
+//                 arrPlayers.push(oPlayer);
+//                 cache.put("PlayerList", arrPlayers);
+//             });
+//         cache.put("PlayerList", arrPlayers);
+
+
+//         request.on('done', function(rowCount, more) {
+//             console.log(rowCount + ' rows returned');
+//         });
+//         connection.execSql(request);
+//     });
+//     };
+
+
+
+router.get('/survey', function (req, res) {
     var config = {
-        userName: process.env.userName,
+        userName: 'whichAdmin',
         password: process.env.password,
         server:process.env.SQLserver,
         options: {
            encrypt: true, database: process.env.database
-                }
-        };
-
+        }
+    }
+    
     var connection = new Connection(config);
-    connection.on('connect', function(err) {
-        request = new Request("select * from tblPlayers", function (err, rowCount) {
+
+    connection.on('connect', function (err) {
+    //if no error, then good to go...
+    // once the connection to SQL server has been established, fetchPlayers initiates the request for data and handles the returned data
+    function fetchPlayers(query) {
+        console.log('entering fetchPlayers', query);
+        var request = new Request(query, function(err) {
+
             if (err) {
+                console.log('>>>>error encountered');
                 console.log(err);
             } else {
-                console.log('Retrieved ' + rowCount + ' rows');
-                // res.render('survey', {
-                //     players: cache.get("PlayerList")
-                // });
+                console.log('>>>>request successfully handled');
+                console.log(err);
             }
-            console.log('Closing Connection');
-            connection.close();
-            });
+    //         // console.log('closing connection');
 
+    //         // connection.close();
+        });
+        console.log('request about to execute');
+        connection.execSql(request);
+
+//callback handler for data coming from SQL server - parses into arrPlayers and then adds to cache
         request.on('row', function(columns) {
             var oPlayer = new Player();
             columns.forEach(function(column) {
@@ -77,66 +149,58 @@ function fetchPlayers() {
         request.on('done', function(rowCount, more) {
             console.log(rowCount + ' rows returned');
         });
-        connection.execSql(request);
-    });
-    };
 
+        }
+// start of connection callback
+        if (err) {
+            console.log('>>>>error encountered');
+            console.log(err);
+        } else {
+            console.log('Survey.js Connected to SQL Azure ' + config.options.database);
+            var TYPES = require('tedious').TYPES;
+            var sql = 'select * from tblPlayers';
+            console.log('calling fetchPlayers');
+            fetchPlayers(sql);
+        }
+   
+        });
 
-
-router.get('/survey', function (req, res) {
-    console.log('calling fetchPlayers');
-    fetchPlayers(); 
-    // while (cache.get('PlayerList') === null) {
-    //     console.log('waiting for SQL server response');
-    // }
-    res.render('survey', {
+        res.render('survey', {
         players: cache.get('PlayerList', arrPlayers) 
     });
     
 });
 
-router.post('/survey', function (req, res) {
-    var config = {
-        userName: process.env.userName,
-        password: process.env.password,
-        server:process.env.SQLserver,
-        options: {
-           encrypt: true, database: process.env.database
-        }
-    }
-    var sInput = req.body.txtInbound;
-    console.log(sInput);
-    res.send('posted');
+// router.post('/survey', function (req, res) {
+//     var config = {
+//         userName: process.env.userName,
+//         password: process.env.password,
+//         server:process.env.SQLserver,
+//         options: {
+//            encrypt: true, database: process.env.database
+//         }
+//     }
+//     var sInput = req.body.txtInbound;
+//     console.log(sInput);
+//     res.send('posted');
 
-    var connection = new Connection(config);
-connection.on('connect', function (err) {
-    //if no error, then good to go...
-    console.log('Connected to SQL Azure ' + config.options.database);
-    var TYPES = require('tedious').TYPES;
-    var sql = 'insert into tblPlayers (id, firstName, lastName, sport)';
-    sql+= 'values (@id, @first, @last, @sport)';
-    var request = new Request(sql, function(err) {
+//     var connection = new Connection(config);
 
-    });
-    var sFirst = req.body.txtFirst;
-    var sLast = req.body.txtLast;
-    var sSport = req.body.txtSport;
-    var iID = req.body.txtID;
 
-    request.addParameter('id', TYPES.Int, iID);
-    request.addParameter('first', TYPES.VarChar, sFirst);
-    request.addParameter('last', TYPES.VarChar, sLast);
-    request.addParameter('sport', TYPES.VarChar, sSport);
-    connection.execSql(request);
 
-    res.send(iID.toString() + ' entered ok');
-    
-});
-connection.on('debug', function (text) {
-    console.log('>>>>debug called');
-    console.log(text);
-});
-});
+//     connection.on('connect', function (err) {
+//         //if no error, then good to go...
+//         console.log('Connected to SQL Azure ' + config.options.database);
+//         var TYPES = require('tedious').TYPES;
+        
+        
+//         });
+
+//     connection.on('debug', function (text) {
+//         console.log('>>>>debug called');
+//         console.log(text);
+//         });
+// });
 
 
 

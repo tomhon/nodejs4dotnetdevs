@@ -31,6 +31,7 @@ router.post('/newPlayerAdmin', function (req, res) {
                 } else {
                     console.log('>>>>request successfully handled');
                     console.log(err);
+                    res.send(' entered ok');
                     // console.log('redirecting to Survey');
                     // res.redirect('/survey');
                 }
