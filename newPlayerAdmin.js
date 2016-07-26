@@ -30,16 +30,10 @@ router.post('/newPlayerAdmin', function (req, res) {
                     console.log(err);
                 } else {
                     console.log('>>>>request successfully handled');
-                    console.log(err);
-                    res.send(' entered ok');
-                    // console.log('redirecting to Survey');
-                    // res.redirect('/survey');
+                    console.log('redirecting to Survey');
+                    res.redirect('/survey');
                 }
-                
 
-                // console.log('closing connection');
-
-                // connection.close();
             });
             console.log('request about to execute');
             connection.execSql(request);
@@ -70,11 +64,11 @@ router.post('/newPlayerAdmin', function (req, res) {
         }
    
         });
-
-    connection.on('debug', function (text) {
-        console.log('>>>>debug called');
-        console.log(text);
-    });
+// //verbose details of SQL connection
+//     connection.on('debug', function (text) {
+//         console.log('>>>>debug called');
+//         console.log(text);
+//     });
 
     connection.on('end', function (text) {
         console.log('>>>>Tedious end event called');
