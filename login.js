@@ -42,7 +42,8 @@ router.post('/login/local', passport.authenticate('local', function  (req, res) 
             findByUsername(sLogin);
         })
     ));
-    res.redirect('/survey');
+   console.log('redirecting to Survey');
+   res.redirect('/survey');
 }));
 
 router.post('/login', function (req, res) {
