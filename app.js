@@ -21,21 +21,21 @@ server.set('views', __dirname + '/views');
 server.use(busboy());
 
 //hooks up survey.js
-server.use(require('./survey'));
+server.use('/survey',require('./survey'));
 //hooks up details.js 
-server.use(require('./details'));
+server.use('/details', require('./details'));
 
-server.use(require('./playerAdmin'));
+server.use('/playerAdmin', require('./playerAdmin'));
 
-server.use(require('./newPlayerAdmin'));
+server.use('/newPlayerAdmin', require('./newPlayerAdmin'));
 
-server.use(require('./createFile'));
+server.use('/createFile', require( './createFile'));
 
-server.use(require('./readFile'));
+server.use('/readFile', require('./readFile'));
 
-server.use(require('./upload'));
+server.use('/upload', require('./upload'));
 
-server.use(require('./login'));
+server.use('/login', require('./login'));
 
 server.set('images', __dirname + '/images');
 
